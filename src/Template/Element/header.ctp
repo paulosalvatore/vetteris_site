@@ -50,7 +50,21 @@
 					)
 			?>
 
-			<?php if (!isset($account) || !$account): ?>
+			<?php if ($account["admin_website"]): ?>
+				<?=
+					$this
+						->Html
+						->link(
+							__("Developer"),
+							[
+								"controller" => "Developer",
+								"action" => "index"
+							]
+						)
+				?>
+			<?php endif; ?>
+
+			<?php if (!$account["connected"]): ?>
 				<?=
 					$this
 						->Html
