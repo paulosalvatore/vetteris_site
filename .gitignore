@@ -39,3 +39,5 @@ nbproject/*
 # Sass preprocessor
 .sass-cache/
 
+*.lock
+!\vendor\cakephp\cakephp\src\ORM\Table.php

@@ -5,8 +5,8 @@
 			<a href="#" class="footer_fb" target="_blank">
 				<span class="fa fa-facebook"></span>
 			</a><br>
-			© Copyright | EldorRealms <?= date("Y") ?>. All Rights Reserved<br>
-			Developed by EldorRealmsTeam
+			© Copyright | Vetteris <?= date("Y") ?>. All Rights Reserved<br>
+			Developed by VetterisTeam
 		</div>
 	</div>
 </section>

@@ -10,10 +10,25 @@
 	<head>
 		<?php include_once("includes/css.php"); ?>
 		<?php include_once("includes/js.php"); ?>
+
+		<?php
+			$arquivoController = "paginas/" . $this->request->controller;
+			$caminhoArquivoController = "js/" . $arquivoController . ".js";
+
+			$arquivoAction = $arquivoController . "/" . $this->request->action;
+			$caminhoArquivoAction = "js/" . $arquivoAction . ".js";
+
+			if (file_exists(($caminhoArquivoController)))
+				echo $this->Html->script($arquivoController);
+
+			if (file_exists(($caminhoArquivoAction)))
+				echo $this->Html->script($arquivoAction);
+		?>
+
 		<?= $this->Html->charset() ?>
 		<title>
 			<?= $this->fetch("title") ?>
-			- Eldor Realms
+			- Vetteris
 		</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -25,7 +40,9 @@
 		<?= $this->fetch("script") ?>
 	</head>
 	<body>
-		<?= $this->Flash->render() ?>
+		<div class="alerts">
+			<?= $this->Flash->render() ?>
+		</div>
 
 		<?= $this->element("header") ?>
 

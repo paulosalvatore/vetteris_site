@@ -1942,6 +1942,7 @@
 		button:hover,
 		.button:hover {
 			background-color: #FFFFFF;
+			color: #2775fd;
 		}
 
 		input[type="submit"]:active,

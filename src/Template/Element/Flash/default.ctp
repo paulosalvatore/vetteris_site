@@ -1,10 +1,18 @@
 <?php
-$class = 'message';
-if (!empty($params['class'])) {
-    $class .= ' ' . $params['class'];
-}
-if (!isset($params['escape']) || $params['escape'] !== false) {
-    $message = h($message);
-}
+	$class = "message";
+	if (!empty($params["class"]))
+		$class .= " " . $params["class"];
+
+	if (!isset($params["escape"]) || $params["escape"] !== false)
+		$message = h($message);
 ?>
-<div class="<?= h($class) ?>" onclick="this.classList.add('hidden');"><?= $message ?></div>
+
+<div class="alert alert-primary alert-icon-block alert-dismissible" role="alert" data-dismiss="alert">
+	<div class="alert-icon">
+		<span class="icon-menu-circle fa fa-smile-o"></span>
+	</div>
+	<strong><?= __("Yeah!") ?></strong> <?= $message ?>
+	<div class="close" aria-label="Close">
+		<span class="fa fa-times"></span>
+	</div>
+</div>

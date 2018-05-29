@@ -5,7 +5,7 @@
 			$this
 				->Html
 				->link(
-					"Eldor Realms",
+					"Vetteris",
 					"/",
 					[
 						"class" => "logo"
@@ -50,23 +50,43 @@
 					)
 			?>
 
-			<?=
-				$this
-					->Html
-					->link(
-						__("Sign In"),
-						"/"
-					)
-			?>
+			<?php if (!isset($account) || !$account): ?>
+				<?=
+					$this
+						->Html
+						->link(
+							__("Sign In"),
+							[
+								"controller" => "Accounts",
+								"action" => "signin"
+							]
+						)
+				?>
 
-			<?=
-				$this
-					->Html
-					->link(
-						__("Sign Up"),
-						"/"
-					)
-			?>
+				<?=
+					$this
+						->Html
+						->link(
+							__("Sign Up"),
+							[
+								"controller" => "Accounts",
+								"action" => "signup"
+							]
+						)
+				?>
+			<?php else: ?>
+				<?=
+					$this
+						->Html
+						->link(
+							__("Sign Out"),
+							[
+								"controller" => "Accounts",
+								"action" => "signout"
+							]
+						)
+				?>
+			<?php endif; ?>
 		</nav>
 	</div>
 </header>

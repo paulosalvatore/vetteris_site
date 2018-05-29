@@ -2,7 +2,7 @@
 <section id="banner">
 	<div class="inner">
 		<h1>
-			<span>Welcome to</span> EldorRealms<br>
+			<span>Welcome to</span> Vetteris<br>
 			7.4 Based<br>
 			Join us today!
 		</h1>
@@ -41,11 +41,11 @@
 			<h2>About the server</h2>
 		</header>
 		<p>
-			EldorRealms is an RPG that blends the best of 2 Worlds:<br>
+			Vetteris is an RPG that blends the best of 2 Worlds:<br>
 			Tibia 7.4 Adapted Mechanics & 10.98 Graphics and Features.<br>
 			<br>
 			<span class="fa"></span>
-			<b class="black">Do you miss the Golden Era of Tibia?</b> On <b>EldorRealms</b> you'll be able to experience every aspect of the best Rune and PVP systems. There are no bindable rune hotkey and you can even drag the corpses around as you play with your friend in a Shared Experience Party, mounted in your favorite pet.
+			<b class="black">Do you miss the Golden Era of Tibia?</b> On <b>Vetteris</b> you'll be able to experience every aspect of the best Rune and PVP systems. There are no bindable rune hotkey and you can even drag the corpses around as you play with your friend in a Shared Experience Party, mounted in your favorite pet.
 		</p>
 		<ul class="actions">
 			<li><a href="#" class="button alt">Join Us</a></li>
@@ -62,7 +62,7 @@
 					<h3>Start your battle TODAY!</h3>
 				</header>
 				<p>
-					Download our client and start your own adventure in Eldor Realms.<br>
+					Download our client and start your own adventure in Vetteris.<br>
 					Thank you for choosing us. <b>We hope you enjoy</b>.
 				</p>
 				<ul class="actions">

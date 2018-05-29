@@ -14,8 +14,11 @@
  */
 namespace App\Controller;
 
+use Aura\Intl\Exception;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\I18n\I18n;
+use Cake\Network\Exception\MethodNotAllowedException;
 
 /**
  * Application Controller
@@ -27,6 +30,7 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
+	public $account;
 
     /**
      * Initialization hook method.
@@ -41,10 +45,47 @@ class AppController extends Controller
     {
         parent::initialize();
 
-        $this->loadComponent("RequestHandler", [
-            "enableBeforeRedirect" => false,
-        ]);
-        $this->loadComponent("Flash");
+        try
+        {
+	        $this->loadComponent("RequestHandler", [
+		        "enableBeforeRedirect" => false,
+	        ]);
+	        $this->loadComponent("Flash");
+	        $this->loadComponent("Cookie");
+	        $this->loadComponent("Auth",
+		        [
+			        "authenticate" => [
+				        "Form" => [
+					        "userModel" => "Accounts",
+					        "fields" => [
+						        "username" => "name",
+						        "password" => "password"
+					        ],
+					        "passwordHasher" => [
+						        "className" => "Legacy",
+					        ]
+				        ]
+			        ],
+			        "loginAction" => [
+				        "controller" => "Accounts",
+				        "action" => "signin"
+			        ],
+			        "authError" => __("Access denied: You are not authorized to access this page.")
+		        ]
+	        );
+        }
+        catch (\Exception $e)
+        {
+        }
+
+	    $this->account = $this->updateAccount();
+	    $this->set("account", $this->account);
+
+	    $this->Cookie->setConfig("path", "/");
+	    $this->Cookie->setConfig([
+		    "expires" => "+1 year",
+		    "httpOnly" => true
+	    ]);
 
         /*
          * Enable the following components for recommended CakePHP security settings.
@@ -53,4 +94,51 @@ class AppController extends Controller
         // $this->loadComponent("Security");
         // $this->loadComponent("Csrf");
     }
+
+	protected function writeOnSession($field, $data = "")
+	{
+		$this->request->getSession()->write($field, $data);
+	}
+
+	protected function readFromSession($field)
+	{
+		return $this->request->getSession()->read($field);
+	}
+
+	public function restrictedAccess()
+	{
+		if (!$this->account ||
+			($this->account && !$this->account["administrador"]))
+			throw new MethodNotAllowedException();
+	}
+
+	protected function updateAccount()
+	{
+		$accountSession = $this->readFromSession("Auth.User");
+
+		if (is_array($accountSession))
+		{
+			$this->loadModel("Accounts");
+
+			$account =
+				$this
+					->Accounts
+					->getId($accountSession["id"]);
+
+			$account = json_encode($account);
+			$account = json_decode($account, true);
+
+			$newAccountSession =
+				array_merge(
+					$accountSession,
+					$account
+				);
+
+			$this->writeOnSession("Auth.User", $newAccountSession);
+
+			return $newAccountSession;
+		}
+
+		return false;
+	}
 }
