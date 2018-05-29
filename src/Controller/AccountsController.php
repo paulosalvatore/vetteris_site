@@ -24,7 +24,7 @@ class AccountsController extends AppController
 		if ($this->request->is("post"))
 		{
 			$account = $this->Auth->identify();
-			$this->Accounts->registerNewLogin($account["id"]);
+			$this->Accounts->registerNewLogin($account["id"], $this->request);
 
 			if ($account)
 			{

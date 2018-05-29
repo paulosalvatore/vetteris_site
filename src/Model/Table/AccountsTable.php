@@ -123,14 +123,15 @@ class AccountsTable extends Table
 		return $query;
 	}
 
-	public function registerNewLogin($accountId)
+	public function registerNewLogin($accountId, $request)
 	{
 		$account = $this->getId($accountId);
 
 		$account = $this->patchEntity(
 			$account,
 			[
-				"last_login" => FrozenTime::now()
+				"last_login" => FrozenTime::now(),
+				"ip" => $request->clientIp()
 			]
 		);
 
