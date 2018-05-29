@@ -131,7 +131,10 @@ class AppController extends Controller
 			$newAccountSession =
 				array_merge(
 					$accountSession,
-					$account
+					$account,
+					[
+						"connected" => true
+					]
 				);
 
 			$this->writeOnSession("Auth.User", $newAccountSession);
@@ -139,6 +142,9 @@ class AppController extends Controller
 			return $newAccountSession;
 		}
 
-		return false;
+		return [
+			"admin_website" => false,
+			"connected" => false
+		];
 	}
 }
