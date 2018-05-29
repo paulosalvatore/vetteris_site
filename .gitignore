@@ -41,3 +41,4 @@ nbproject/*
 
 *.lock
 !\vendor\cakephp\cakephp\src\ORM\Table.php
+webroot/img/items/*.gif
