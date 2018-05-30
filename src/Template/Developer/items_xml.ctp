@@ -6,6 +6,20 @@
 
 <section id="main" >
 	<div class="inner">
+		<?=
+			$this
+				->Html
+				->link(
+					__("Back to Monsters"),
+					[
+						"action" => "monsters_xml"
+					],
+					[
+						"class" => "button"
+					]
+				)
+		?>
+
 		<header class="major special">
 			<h1><?= __("Items - XML") ?></h1>
 		</header>
@@ -19,6 +33,7 @@
 								<th width="50"><?= __("Image") ?></th>
 								<th>ID</th>
 								<th><?= __("Name") ?></th>
+								<th><?= __("Monsters") ?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -38,6 +53,9 @@
 									</td>
 									<td>
 										<?= h($item->name) ?>
+									</td>
+									<td>
+										<?= $item->showMonsters() ?>
 									</td>
 								</tr>
 							<?php endforeach; ?>

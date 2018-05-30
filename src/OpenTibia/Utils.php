@@ -26,4 +26,9 @@ class Utils
 
 		return $array;
 	}
+
+	public static function formatName($name)
+	{
+		return ucwords($name);
+	}
 }

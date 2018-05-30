@@ -20,21 +20,52 @@ class Monsters
 
 		foreach ($array as $key => $value)
 			$this->$key = $value;
+
+		if (isset($this->name))
+			$this->name = Utils::formatName($this->name);
 	}
 
-	public static function loadMonsters()
+	public static function loadMonsters($loadFile = false)
 	{
 		$folder = Server::getMonsterFolder();
-
 		$array = Server::getContent($folder . "monsters.xml");
+		$array = Utils::clearArray($array["monsters"]["monster"]);
 
-		return $array["monsters"]["monster"];
+		if ($loadFile)
+			foreach ($array as $key => $value)
+				$array[$key] = Monsters::loadMonster($value["file"]);
+
+		return $array;
+	}
+
+	public static function loadMonstersLootByFiles($files)
+	{
+		$monstersLoot = [];
+
+		foreach ($files as $filename)
+		{
+			if ($filename == "0")
+				continue;
+
+			$monster = Monsters::loadMonster($filename);
+
+			$monsterLoot = $monster->getLootIds();
+			$monstersLoot =
+				array_merge(
+					$monstersLoot,
+					$monsterLoot
+				);
+		}
+
+		$monstersLoot = array_unique($monstersLoot);
+		sort($monstersLoot);
+
+		return $monstersLoot;
 	}
 
 	public static function loadMonster($monsterFilename)
 	{
 		$file = Server::getMonsterFolder() . $monsterFilename;
-
 		$array = Server::getContent($file);
 
 		return new Monsters($array["monster"]);
@@ -72,5 +103,10 @@ class Monsters
 		}
 
 		return $itemsIds;
+	}
+
+	public function checkLootItemById($itemId)
+	{
+		return in_array($itemId, $this->getLootIds());
 	}
 }

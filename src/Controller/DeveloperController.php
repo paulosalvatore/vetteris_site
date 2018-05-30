@@ -10,7 +10,6 @@ namespace App\Controller;
 
 use App\OpenTibia\Items;
 use App\OpenTibia\Monsters;
-use Cake\Utility\Xml;
 
 class DeveloperController extends AppController
 {
@@ -26,34 +25,13 @@ class DeveloperController extends AppController
 
 			$loot = $data["loot"] == "1";
 
-			$monstersLoot = [];
-
-			foreach ($data["monsters"] as $monsterFilename)
-			{
-				if ($monsterFilename == "0")
-					continue;
-
-				$monster = Monsters::loadMonster($monsterFilename);
-
-				if ($loot)
-				{
-					$monsterLoot = $monster->getLootIds();
-					$monstersLoot =
-						array_merge(
-							$monstersLoot,
-							$monsterLoot
-						);
-				}
-			}
-
 			if ($loot)
 			{
-				$monstersLoot = array_unique($monstersLoot);
-				sort($monstersLoot);
+				$monstersLoot = Monsters::loadMonstersLootByFiles($data["monsters"]);
 
 				return $this->redirect([
 					"action" => "items_xml",
-					 base64_encode(json_encode($monstersLoot))
+					base64_encode(json_encode($monstersLoot))
 				]);
 			}
 		}

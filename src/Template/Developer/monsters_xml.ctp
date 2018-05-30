@@ -82,17 +82,17 @@
 														[
 															"label" => false,
 															"type" => "checkbox",
-															"value" => $monster["@file"]
+															"value" => $monster["file"]
 														]
 													)
 											?>
 											<label for="monsters-<?= $index ?>"></label>
 										</td>
 										<td>
-											<?= h($monster["@name"]) ?>
+											<?= h($monster["name"]) ?>
 										</td>
 										<td>
-											<?= h($monster["@file"]) ?>
+											<?= h($monster["file"]) ?>
 										</td>
 									</tr>
 								<?php endforeach; ?>

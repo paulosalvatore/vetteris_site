@@ -10,6 +10,8 @@ namespace App\OpenTibia;
 
 class Items
 {
+	private $monsters = null;
+
 	/**
 	 * Items constructor.
 	 * @param $array
@@ -22,7 +24,8 @@ class Items
 		foreach ($array as $key => $value)
 			$this->$key = $value;
 
-		$this->formatName();
+		if (isset($this->name))
+			$this->name = Utils::formatName($this->name);
 
 		$this->loadImage();
 	}
@@ -30,11 +33,8 @@ class Items
 	public static function loadItems($itemsIds = null)
 	{
 		$folder = Server::getItemsFolder();
-
 		$array = Server::getContent($folder . "items.xml");
-
 		$array = $array["items"]["item"];
-
 		$array = Utils::clearArray($array);
 
 		$items = [];
@@ -52,12 +52,6 @@ class Items
 		}
 
 		return $items;
-	}
-
-	private function formatName()
-	{
-		if (isset($this->name))
-			$this->name = ucwords($this->name);
 	}
 
 	private function loadImage()
@@ -78,5 +72,37 @@ class Items
 			return in_array($id, $itemsIds);
 
 		return true;
+	}
+
+	private function loadMonsters()
+	{
+		// Increase PHP Time Limit to load all monsters correctly
+		set_time_limit(60 * 60);
+
+		$this->monsters = [];
+
+		$monsters = Monsters::loadMonsters(true);
+
+		foreach ($monsters as $monster)
+			if ($monster->checkLootItemById($this->id))
+				$this->monsters[] = $monster->name;
+
+		sort($this->monsters);
+	}
+
+	public function showMonsters()
+	{
+		if (!is_array($this->monsters))
+			$this->loadMonsters();
+
+		if (count($this->monsters) == 0)
+			return __("This item is not dropped by any creatures.");
+
+		$result = implode("<br>", array_slice($this->monsters, 0, 5));
+
+		if (count($this->monsters) > 5)
+			$result .= "<br>" . __("+{0} monsters", [count($this->monsters) - 5]);
+
+		return $result;
 	}
 }
